@@ -10,6 +10,9 @@ import { Observable } from 'rxjs/Observable';
 export class HomePage {
 
   moleHoles: MoleHole[] = [];
+  moleUpdate: any;
+	moleObserver: any;
+
   showHitMessage: Boolean = false;
   gameDriver: any;
   gameTimer: any;
@@ -23,7 +26,13 @@ export class HomePage {
     /**
      * Create an observer to be passed to the new MoleHoles
      */
+     this.moleUpdate = Observable.create(observer => {
+			this.moleObserver = observer;
+		});
 
+		this.moleUpdate.subscribe((score) => {
+			this.moleHoles.push(score)
+		})
     /**
      * Subscribe to the observer created above to update the score
      */
@@ -103,6 +112,10 @@ export class HomePage {
        * What should this function do?
        * Hint: Look in the home.scss file
        */
+
+       case 0:return "hid"; break;
+       case 1:return "out"; break;
+       case 2:return "hit"; break;
     }
 }
 
