@@ -10,14 +10,15 @@ import { Observable } from 'rxjs/Observable';
 export class HomePage {
 
   moleHoles: MoleHole[] = [];
-  moleUpdate: any;
-	moleObserver: any;
 
   showHitMessage: Boolean = false;
   gameDriver: any;
   gameTimer: any;
   timeLeft: number = 0;
   timerObserver: any;
+  scoreUpdate: any;
+  scoreObserver: any;
+
   score: 0;
 
 
@@ -26,20 +27,25 @@ export class HomePage {
     /**
      * Create an observer to be passed to the new MoleHoles
      */
-     this.moleUpdate = Observable.create(observer => {
-			this.moleObserver = observer;
+     this.scoreUpdate = Observable.create(observer => {
+			this.scoreObserver = observer;
 		});
 
-		this.moleUpdate.subscribe((score) => {
-			this.moleHoles.push(score)
-		})
     /**
      * Subscribe to the observer created above to update the score
      */
+		this.scoreUpdate.subscribe((num) => {
+			this.moleHoles.push(num);
+		})
+
+
 
     for(let i = 0; i<9; i++) {
-      this.moleHoles.push(new MoleHole(i, /*Pass the observer created to the new MoleHoles*/))
+      this.moleHoles.push(new MoleHole(i, this.scoreObserver/*Pass the observer created to the new MoleHoles*/))
     }
+
+
+
 
     let timerUpdate = Observable.create(observer => {
       this.timerObserver = observer;
@@ -50,6 +56,13 @@ export class HomePage {
     })
 
     this.startGame()
+
+
+
+    // this.startGame(this.timeObserver);
+    // this.stopGame(this.timeObserver);
+
+
   }
 
 

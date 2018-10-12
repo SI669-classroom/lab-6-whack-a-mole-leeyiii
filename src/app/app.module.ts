@@ -6,14 +6,18 @@ import { DataProvider } from '../provider/data/data';
 import { StatusBar } from '@ionic-native/status-bar';
 import { NativeAudio } from '@ionic-native/native-audio';
 import { IonicStorageModule } from '@ionic/storage';
+import { RouterModule, RouteReuseStrategy, Routes } from '@angular/router';
+
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 
+
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+
   ],
   imports: [
     BrowserModule,
@@ -23,7 +27,8 @@ import { HomePage } from '../pages/home/home';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+
   ],
   providers: [
     DataProvider,

@@ -24,41 +24,41 @@ export class LeaderboardPage {
     public navParams: NavParams,
     public dataService: DataProvider,
     public storage: Storage,
-    public platform: Platform) {
-
-    this.score = this.navParams.get('score');
+    public platform: Platform){
+      this.score = this.navParams.get('score');
   }
 
-  // ionViewDidLoad() {
-  //   console.log('ionViewDidLoad LeaderboardPage');
-  //   Platform.ready isn't required in the new Ionic
-  // this.platform.ready().then(() => {  //this.platform.ready().then
-  //     /*Storage get*/this.score.then((result) => {
-  //       let res;
-  //       if(!result) {
-  //         res = []
-  //       } else {
-  //         res = JSON.parse(result)
-  //       }
-  //
-  //       res.push({
-  //         score: this.score,
-  //         time: Date.now()
-  //       })
-  //
-  //       console.log(res);
-  //
-  //       this.scoreList = res.sort(function(a, b) {
-  //         if(a.score > b.score) {
-  //           return -1;
-  //         } else {
-  //           return 1;
-  //         }
-  //       })
-  //
-  //       /*Storage set*/console.log('leaderboard', JSON.stringify(res));
-  //     })
-  //   })
-  // }
+    // ionViewDidLoad() {
+    //     console.log('ionViewDidLoad LeaderboardPage');
+    // Platform.ready isn't required in the new Ionic
 
+  ngOnInit(){
+    this.platform.ready().then(() => {  //this.platform.ready().then
+        /*Storage get*/this.storage.get('score').then((result) => {
+            let res;
+            if(!result) {
+              res = []
+            } else {
+              res = JSON.parse(result)
+            }
+
+            res.push({
+              score: this.score,
+              time: Date.now()
+            })
+
+            console.log(res);
+
+            this.scoreList = res.sort(function(a, b) {
+            if(a.score > b.score) {
+              return -1;
+            } else {
+              return 1;
+            }
+          })
+
+        /*Storage set*/this.storage.set('leaderboard', JSON.stringify(res));
+      })
+    })
+  }
 }
