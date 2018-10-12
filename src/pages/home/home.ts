@@ -34,10 +34,9 @@ export class HomePage {
     /**
      * Subscribe to the observer created above to update the score
      */
-		this.scoreUpdate.subscribe((num) => {
-			this.moleHoles.push(num);
-		})
-
+     this.scoreUpdate.subscribe(() => {
+       this.score ++;
+     })
 
 
     for(let i = 0; i<9; i++) {
@@ -126,9 +125,9 @@ export class HomePage {
        * Hint: Look in the home.scss file
        */
 
-       case 0:return "hid"; break;
-       case 1:return "out"; break;
-       case 2:return "hit"; break;
+       case 0:return "hid";
+       case 1:return "out";
+       case 2:return "hit";
     }
 }
 

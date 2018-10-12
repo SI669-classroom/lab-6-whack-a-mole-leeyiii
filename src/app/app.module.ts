@@ -6,7 +6,6 @@ import { DataProvider } from '../provider/data/data';
 import { StatusBar } from '@ionic-native/status-bar';
 import { NativeAudio } from '@ionic-native/native-audio';
 import { IonicStorageModule } from '@ionic/storage';
-import { RouterModule, RouteReuseStrategy, Routes } from '@angular/router';
 
 
 import { MyApp } from './app.component';
