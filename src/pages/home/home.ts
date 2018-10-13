@@ -36,6 +36,8 @@ export class HomePage {
      */
      this.scoreUpdate.subscribe(() => {
        this.score ++;
+       console.log("score updated!", this.score);
+
      })
 
 

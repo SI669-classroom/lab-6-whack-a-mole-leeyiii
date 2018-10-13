@@ -12,53 +12,56 @@ import { Storage } from '@ionic/storage';
 
 @IonicPage()
 @Component({
-  selector: 'page-leaderboard',
-  templateUrl: 'leaderboard.html',
+    selector: 'page-leaderboard',
+    templateUrl: 'leaderboard.html',
 })
 export class LeaderboardPage {
 
-  score: number;
-  scoreList: any[] = [];
+    score: number;
+    scoreList: any[] = [];
 
-  constructor(public navCtrl: NavController,
-    public navParams: NavParams,
-    public dataService: DataProvider,
-    public storage: Storage,
-    public platform: Platform){
-      this.score = this.navParams.get('score');
-  }
+    constructor(public navCtrl: NavController,
+        public navParams: NavParams,
+        public dataService: DataProvider,
+        public storage: Storage,
+        public platform: Platform) {
+        this.score = this.navParams.get('score');
+    }
 
     // ionViewDidLoad() {
     //     console.log('ionViewDidLoad LeaderboardPage');
     // Platform.ready isn't required in the new Ionic
 
-  ngOnInit(){
-    this.platform.ready().then(() => {  //this.platform.ready().then
-        /*Storage get*/this.storage.get('score').then((result) => {
-            let res;
-            if(!result) {
-              res = []
-            } else {
-              res = JSON.parse(result)
-            }
+    ngOnInit() {
+        this.platform.ready().then(() => {  //this.platform.ready().then
+            this.storage.get('leaderboard').then((result) => {
+                console.log(
+                    'from storage got result', result
+                );
+                let res;
+                if (!result) {
+                    res = []
+                } else {
+                    res = JSON.parse(result)
+                }
 
-            res.push({
-              score: this.score,
-              time: Date.now()
+                res.push({
+                    score: this.score,
+                    time: Date.now()
+                })
+
+                console.log('after pushed new score, res is', res);
+
+                this.scoreList = res.sort(function (a, b) {
+                    if (a.score > b.score) {
+                        return -1;
+                    } else {
+                        return 1;
+                    }
+                })
+
+                this.storage.set('leaderboard', JSON.stringify(res));
             })
-
-            console.log(res);
-
-            this.scoreList = res.sort(function(a, b) {
-            if(a.score > b.score) {
-              return -1;
-            } else {
-              return 1;
-            }
-          })
-
-        /*Storage set*/this.storage.set('leaderboard', JSON.stringify(res));
-      })
-    })
-  }
+        })
+    }
 }
