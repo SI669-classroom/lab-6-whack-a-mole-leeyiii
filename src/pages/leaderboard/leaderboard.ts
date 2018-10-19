@@ -20,24 +20,28 @@ export class LeaderboardPage {
   score: number;
   scoreList: any[] = [];
 
+
+
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public dataService: DataProvider,
     public storage: Storage,
     public platform: Platform){
       this.score = this.navParams.get('score');
-  }
+    }
 
     // ionViewDidLoad() {
     //     console.log('ionViewDidLoad LeaderboardPage');
     // Platform.ready isn't required in the new Ionic
 
   ngOnInit(){
+
     this.platform.ready().then(() => {  //this.platform.ready().then
-        /*Storage get*/this.storage.get('score').then((result) => {
+        /*Storage get*/this.storage.get('leaderboard').then((result) => {
             let res;
             if(!result) {
-              res = []
+            res = []
+
             } else {
               res = JSON.parse(result)
             }
@@ -45,6 +49,7 @@ export class LeaderboardPage {
             res.push({
               score: this.score,
               time: Date.now()
+
             })
 
             console.log(res);
@@ -55,6 +60,8 @@ export class LeaderboardPage {
             } else {
               return 1;
             }
+            //console.log(res);
+
           })
 
         /*Storage set*/this.storage.set('leaderboard', JSON.stringify(res));
