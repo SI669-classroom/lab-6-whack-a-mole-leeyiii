@@ -12,14 +12,15 @@ import { Storage } from '@ionic/storage';
 
 @IonicPage()
 @Component({
-  selector: 'page-leaderboard',
-  templateUrl: 'leaderboard.html',
+    selector: 'page-leaderboard',
+    templateUrl: 'leaderboard.html',
 })
 export class LeaderboardPage {
 
-  score: number;
-  scoreList: any[] = [];
+    score: number;
+    scoreList: any[] = [];
 
+<<<<<<< HEAD
 
 
   constructor(public navCtrl: NavController,
@@ -28,12 +29,21 @@ export class LeaderboardPage {
     public storage: Storage,
     public platform: Platform){
       this.score = this.navParams.get('score');
+=======
+    constructor(public navCtrl: NavController,
+        public navParams: NavParams,
+        public dataService: DataProvider,
+        public storage: Storage,
+        public platform: Platform) {
+        this.score = this.navParams.get('score');
+>>>>>>> 068595252ae9a756663f64c90ee0d292f528cad2
     }
 
     // ionViewDidLoad() {
     //     console.log('ionViewDidLoad LeaderboardPage');
     // Platform.ready isn't required in the new Ionic
 
+<<<<<<< HEAD
   ngOnInit(){
 
     this.platform.ready().then(() => {  //this.platform.ready().then
@@ -51,9 +61,29 @@ export class LeaderboardPage {
               time: Date.now()
 
             })
+=======
+    ngOnInit() {
+        this.platform.ready().then(() => {  //this.platform.ready().then
+            this.storage.get('leaderboard').then((result) => {
+                console.log(
+                    'from storage got result', result
+                );
+                let res;
+                if (!result) {
+                    res = []
+                } else {
+                    res = JSON.parse(result)
+                }
 
-            console.log(res);
+                res.push({
+                    score: this.score,
+                    time: Date.now()
+                })
+>>>>>>> 068595252ae9a756663f64c90ee0d292f528cad2
 
+                console.log('after pushed new score, res is', res);
+
+<<<<<<< HEAD
             this.scoreList = res.sort(function(a, b) {
             if(a.score > b.score) {
               return -1;
@@ -63,9 +93,18 @@ export class LeaderboardPage {
             //console.log(res);
 
           })
+=======
+                this.scoreList = res.sort(function (a, b) {
+                    if (a.score > b.score) {
+                        return -1;
+                    } else {
+                        return 1;
+                    }
+                })
+>>>>>>> 068595252ae9a756663f64c90ee0d292f528cad2
 
-        /*Storage set*/this.storage.set('leaderboard', JSON.stringify(res));
-      })
-    })
-  }
+                this.storage.set('leaderboard', JSON.stringify(res));
+            })
+        })
+    }
 }
